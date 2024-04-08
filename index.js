@@ -4,17 +4,6 @@ import fs from "fs";
 
 inquirer
     .prompt([{message: "enter your url: ", name: "URL", },])
-    .then((answers) => {
-        const url = answers.URL;
-        var qr_svg = qr.image(url);
-        qr_svg.pipe(fs.createWriteStream('qr_img.png'));
-        fs.writeFile("URL.txt", url, (err) =>{
-            if(err) throw err;
-            console.log("file saved to qr_img.png");
-        }); 
-    })
-    .catch((error) => {
-        if (error.isTtyError) {
-        } else {
-        }
-    });
+    .then((answers) => { qr.image(answers.URL).pipe(fs.createWriteStream('qr_img.png'));
+        fs.writeFile("URL.txt", answers.URL, (err) =>{ if(err) throw err; console.log("file saved to qr_img.png");}); })
+    .catch((error) => { if (error.isTtyError) { } else { } });
